@@ -1,0 +1,238 @@
+package student_classes;
+
+import java.util.*;
+
+/**
+ * When you do a web search, the results page shows you a <a href=
+ * "http://searchengineland.com/anatomy-of-a-google-snippet-38357">snippet</a>
+ * for each result, showing you search terms in context. For purposes of this
+ * project, a snippet is a subsequence of a document that contains all the
+ * search terms.
+ * 
+ * For this project, you will write code that, given a document (a sequence of
+ * words) and set of search terms, find the minimal length subsequence in the
+ * document that contains all of the search terms.
+ * 
+ * If there are multiple subsequences that have the same minimal length, you may
+ * return any one of them.
+ * 
+ */
+public class MinimumSnippet
+{
+
+	/**
+	 * Compute minimum snippet.
+	 * 
+	 * Given a document (represented as a <code>List<String></code>), and a set
+	 * of terms (also represented as a <code>List<String></code>), find the
+	 * shortest subsequence of the document that contains all of the terms.
+	 * 
+	 * This constructor should find the minimum snippet, and store information
+	 * about the snippet in fields so that the methods can be called to query
+	 * information about the snippet. All significant computation should be done
+	 * during construction.
+	 * 
+	 * @param document
+	 *            The Document is an <code>Iterable<String></code>. Do not
+	 *            change the document. It is an <code>Iterable</code>, rather
+	 *            than a <code>List</code>, to allow for implementations where
+	 *            we scan very large documents that are not read entirely into
+	 *            memory. If you have problems figuring out how to solve it with
+	 *            the document represented as an <code>Iterable</code>, you may
+	 *            cast it to a <code>List<String></code>; in all but a very
+	 *            small number of test cases, in will in fact be a
+	 *            <code>List<String></code>.
+	 * 
+	 * @param terms
+	 *            The terms you need to look for. The terms will be unique
+	 *            (e.g., no term will be repeated), although you do not need to
+	 *            check for that. There should always be at least one term and
+	 *            your code should <code>throw</code> an
+	 *            <code>IllegalArgumentException</code> if "terms" is empty.
+	 * 
+	 * 
+	 */
+
+	private int start = 0;
+	private int end = 0;
+	private int length = Integer.MAX_VALUE;
+	private int pos = 0;
+	private boolean found;
+	ArrayList<Integer> start_indexes;
+	ArrayList<Integer> end_indexes;
+	List<String> strings;
+	List<String> snippet;
+	List<String> documentIn;
+	List<String> search;
+
+	public MinimumSnippet(Iterable<String> document, List<String> terms)
+	{
+		start_indexes = new ArrayList<Integer>();
+		end_indexes = new ArrayList<Integer>();
+		strings = new ArrayList<String>();
+		search = terms;
+
+		documentIn = new ArrayList<String>();
+		ArrayList<Integer> Lengths = new ArrayList<Integer>();
+
+		if (terms.size() == 0)
+		{
+			throw new IllegalArgumentException();
+		}
+
+		for (String g : document)
+		{
+			documentIn.add(g);
+		}
+
+		while (end < documentIn.size())
+		{
+			snippet = documentIn.subList(start, end + 1);
+
+			if (snippet.containsAll(terms))
+			{
+				found = true;
+
+				start_indexes.add(start);
+				end_indexes.add(end);
+				Lengths.add(snippet.size());
+				start++;
+			}
+			else
+			{
+				found = false;
+				end++;
+			}
+		}
+
+		if (documentIn.containsAll(terms))
+		{
+			found = true;
+		}
+		else
+		{
+			found = false;
+		}
+
+		int smallest = Integer.MAX_VALUE;
+		int find = 0;
+
+		for (int i = 0; i < Lengths.size(); i++)
+		{
+			if (Lengths.get(i) < smallest)
+			{
+				find = i;
+
+			}
+		}
+
+		if (found)
+		{
+			start = start_indexes.get(find);
+			end = end_indexes.get(find);
+			length = end - start + 1;
+		}
+	}
+
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * /** Returns whether or not all terms were found in the document. If all
+	 * terms were not found, then none of the other methods should be called.
+	 * 
+	 * @return whether all terms were found in the document.
+	 */
+	public boolean foundAllTerms()
+	{
+		return found;
+	}
+
+	/**
+	 * Return the starting position of the snippet
+	 * 
+	 * @return the index in the document of the first element of the snippet
+	 */
+	public int getStartingPos()
+	{
+		
+		if (!found)
+		{
+			throw new UnsupportedOperationException();
+		}
+		else
+		{
+			return start;
+		}
+
+	}
+
+	/**
+	 * Return the ending position of the snippet
+	 * 
+	 * @return the index in the document of the last element of the snippet
+	 */
+	public int getEndingPos()
+	{
+		if (!found)
+		{
+			throw new UnsupportedOperationException();
+		}
+		else
+		{
+			return end;
+		}
+
+	}
+
+	/**
+	 * Return total number of elements contained in the snippet.
+	 * 
+	 * @return
+	 */
+	public int getLength()
+	{
+		
+		if (!found)
+		{
+			throw new UnsupportedOperationException();
+		}
+		else
+		{
+			return length;
+		}
+		
+	}
+
+	/**
+	 * Returns the position of one of the search terms as it appears in the
+	 * original document
+	 * 
+	 * @param index
+	 *            index of the term in the original list of terms. For example,
+	 *            if index is 0 then the method will return the position (in the
+	 *            document) of the first search term. If the index is 1, then
+	 *            the method will return the position (in the document) of the
+	 *            second search term. Etc.
+	 * 
+	 * @return position of the term in the document
+	 */
+	public int getPos(int index)
+	{
+		int get = 0;
+
+		String c = search.get(index);
+
+		for (int i = start; i < end + 1; i++){
+			if (documentIn.get(i).equals(c)){
+				get = i;
+			}
+		}
+		pos = get;
+
+		return pos;
+
+	}
+
+}
