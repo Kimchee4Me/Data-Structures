@@ -1,0 +1,251 @@
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.*;
+import org.junit.Test;
+
+import student_classes.MinimumSnippet;
+
+public class StudentTests {
+
+	@Test
+	public void testMinimumSnippet() {
+		ArrayList<String> document = new ArrayList<String>();
+		List<String> terms = new ArrayList<String>();
+		document.add("a");  
+		document.add("b");
+		document.add("o");
+		document.add("c");
+		document.add("g");
+		document.add("a");
+		document.add("g");
+		document.add("g");
+		document.add("b");
+		document.add("p");
+	
+		
+		terms.add("a");
+		terms.add("g");
+		terms.add("c");
+		
+
+		MinimumSnippet test = new MinimumSnippet(document, terms);
+		assertTrue(test.foundAllTerms());
+	}
+
+	@Test
+	public void testFoundAllTerms() {
+		ArrayList<String> document1 = new ArrayList<String>();
+		ArrayList<String> document2 = new ArrayList<String>();
+		ArrayList<String> document3 = new ArrayList<String>();
+		ArrayList<String> terms = new ArrayList<String>();
+		
+		document1.add("a"); 
+		document1.add("b"); 
+		document1.add("o"); 
+		document1.add("c"); 
+		document1.add("g"); 
+	
+		document2.add("a"); 
+		document2.add("g"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("b"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("a"); 
+		
+		document3.add("b"); 
+		document3.add("b"); 
+		document3.add("o"); 
+		document3.add("c"); 
+		document3.add("g"); 
+		
+		terms.add("a");
+		terms.add("b");
+		terms.add("c");
+		
+		MinimumSnippet test1 = new MinimumSnippet(document1, terms);
+		MinimumSnippet test2 = new MinimumSnippet(document2, terms);
+		MinimumSnippet test3 = new MinimumSnippet(document3, terms);
+		
+		assertTrue(test1.foundAllTerms());
+		assertTrue(test2.foundAllTerms());
+		assertFalse(test3.foundAllTerms());
+	}
+	
+	@Test
+	public void testGetStartingPos() {
+		ArrayList<String> document1 = new ArrayList<String>();
+		ArrayList<String> document2 = new ArrayList<String>();
+		ArrayList<String> document3 = new ArrayList<String>();
+		ArrayList<String> terms = new ArrayList<String>();
+		
+		document1.add("a"); 
+		document1.add("b"); 
+		document1.add("o"); 
+		document1.add("c"); 
+		document1.add("g"); 
+	
+		document2.add("a"); 
+		document2.add("g"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("b"); 
+		document2.add("b"); 
+		document2.add("c"); 
+		document2.add("a"); 
+		
+		document3.add("b"); 
+		document3.add("b"); 
+		document3.add("o"); 
+		document3.add("c"); 
+		document3.add("g"); 
+		document3.add("a"); 
+		
+		terms.add("a");
+		terms.add("b");
+		terms.add("c");
+		
+		MinimumSnippet test1 = new MinimumSnippet(document1, terms);
+		MinimumSnippet test2 = new MinimumSnippet(document2, terms);
+		MinimumSnippet test3 = new MinimumSnippet(document3, terms);
+		
+		assertTrue(test1.getStartingPos()==0);
+		assertTrue(test2.getStartingPos()==5);
+		assertFalse(test3.getStartingPos()==2);
+	}
+
+	@Test
+	public void testGetEndingPos() {
+		
+		ArrayList<String> document1 = new ArrayList<String>();
+		ArrayList<String> document2 = new ArrayList<String>();
+		ArrayList<String> document3 = new ArrayList<String>();
+		ArrayList<String> terms = new ArrayList<String>();
+		
+		document1.add("a"); 
+		document1.add("b"); 
+		document1.add("o"); 
+		document1.add("c"); 
+		document1.add("g"); 
+	
+		document2.add("a"); 
+		document2.add("g"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("b"); 
+		document2.add("b"); 
+		document2.add("c"); 
+		document2.add("a"); 
+		document2.add("a"); 
+		
+		document3.add("b"); 
+		document3.add("b"); 
+		document3.add("o"); 
+		document3.add("c"); 
+		document3.add("g"); 
+		document3.add("a"); 
+		
+		terms.add("a");
+		terms.add("b");
+		terms.add("c");
+		
+		MinimumSnippet test1 = new MinimumSnippet(document1, terms);
+		MinimumSnippet test2 = new MinimumSnippet(document2, terms);
+		MinimumSnippet test3 = new MinimumSnippet(document3, terms);
+		
+		assertTrue(test1.getEndingPos()==3);
+		assertTrue(test2.getEndingPos()==7);
+		assertFalse(test3.getEndingPos()==4);
+	}
+
+	@Test
+	public void testGetLength() {
+		ArrayList<String> document1 = new ArrayList<String>();
+		ArrayList<String> document2 = new ArrayList<String>();
+		ArrayList<String> document3 = new ArrayList<String>();
+		ArrayList<String> terms = new ArrayList<String>();
+		
+		document1.add("a"); 
+		document1.add("b"); 
+		document1.add("o"); 
+		document1.add("c"); 
+		document1.add("g"); 
+	
+		document2.add("a"); 
+		document2.add("g"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("b"); 
+		document2.add("b"); 
+		document2.add("c"); 
+		document2.add("a"); 
+		document2.add("a"); 
+		
+		document3.add("b"); 
+		document3.add("b"); 
+		document3.add("o"); 
+		document3.add("c"); 
+		document3.add("g"); 
+		document3.add("a"); 
+		
+		terms.add("a");
+		terms.add("b");
+		terms.add("c");
+		
+		MinimumSnippet test1 = new MinimumSnippet(document1, terms);
+		MinimumSnippet test2 = new MinimumSnippet(document2, terms);
+		MinimumSnippet test3 = new MinimumSnippet(document3, terms);
+		
+		assertTrue(test1.getLength()==4);
+		assertTrue(test2.getLength()==3);
+		assertFalse(test3.getLength()==6);
+	}
+
+	@Test
+	public void testGetPos() {
+		ArrayList<String> document1 = new ArrayList<String>();
+		ArrayList<String> document2 = new ArrayList<String>();
+		ArrayList<String> document3 = new ArrayList<String>();
+		ArrayList<String> terms = new ArrayList<String>();
+		
+		document1.add("a"); 
+		document1.add("b"); 
+		document1.add("o"); 
+		document1.add("c"); 
+		document1.add("g"); 
+	
+		document2.add("a"); 
+		document2.add("g"); 
+		document2.add("o"); 
+		document2.add("c"); 
+		document2.add("b"); 
+		document2.add("b"); 
+		document2.add("c"); 
+		document2.add("a"); 
+		document2.add("a"); 
+		
+		document3.add("b"); 
+		document3.add("b"); 
+		document3.add("o"); 
+		document3.add("c"); 
+		document3.add("g"); 
+		document3.add("a"); 
+		
+		terms.add("a");
+		terms.add("b");
+		terms.add("c");
+		
+		MinimumSnippet test1 = new MinimumSnippet(document1, terms);
+		MinimumSnippet test2 = new MinimumSnippet(document2, terms);
+		MinimumSnippet test3 = new MinimumSnippet(document3, terms);
+		
+		assertTrue(test1.getPos(0)==0);
+		assertTrue(test2.getPos(1)==5);
+		assertFalse(test3.getPos(1)==3);
+	}
+
+}
